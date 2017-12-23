@@ -1,5 +1,8 @@
 # Autohotkey
-My autohotkey scripts
+My scripts for [autohotkey.com](https://autohotkey.com/)<br>
+I use 2.0 syntax.<br>
+Documentation: https://lexikos.github.io/v2/docs/AutoHotkey.htm<br>
+Download page: https://autohotkey.com/download/2.0/
 
 ## File structure
 * index.ahk - the main file
@@ -10,7 +13,7 @@ My autohotkey scripts
 * /ai - graphic files for illustrator.ahk
 
 ## How to run
-Type win-r (run window) and enter "Shell:Startup". <br>
+Type win-r (run window) and enter "Shell:Startup".<br>
 Make link to ```"C:\Program Files\AutoHotkey\AutoHotkey.exe" C:\Users\user\Documents\Autohotkey\index.ahk ```
 
 
