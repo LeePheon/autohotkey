@@ -14,7 +14,7 @@ Download page: https://autohotkey.com/download/2.0/
 
 ## How to run
 Install Autohotkey.<br>
-Clone repository to "Documents".
+Clone repository to "Documents".<br>
 Type win-r (run window) and enter "Shell:Startup".<br>
 Make link to ```"C:\Program Files\AutoHotkey\AutoHotkey.exe" C:\Users\user\Documents\Autohotkey\index.ahk ```
 
