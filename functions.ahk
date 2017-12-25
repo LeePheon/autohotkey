@@ -61,7 +61,7 @@ KeyMod(string, exclude := "") {
   Key mods string
 }
 
-;emulate mouse clicks with modifiers (for 3d apps)
+;emulate mouse click with modifier (for 3d apps)
 Mouse(action, keys*) { 
   ;action - L/M/R - binded mouse button
   

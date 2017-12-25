@@ -15,22 +15,22 @@
       Say "Unlock Selected"
       return
 
-    MButton:: ;mmb - pan
+    MButton:: ;pan
       Send "{Space down}{LButton down}"
       KeyWait "MButton"
       Send "{Space up}{LButton up}"
       return
 
-    WheelUp:: ;zoom out
+    WheelUp:: ;zoom-
       Send "!{WheelUp}"
       return
 
-    WheelDown:: ;zoom in
+    WheelDown:: ;zoom+
       Send "!{WheelDown}"
       return
 
   ;;other
-    ~Alt Up:: Send "!" ;disable alt menu
+    ~Alt Up:: Send "!" ;disable menu on single alt click
 
     ~Delete:
       Say "Delete"
@@ -56,7 +56,7 @@
       if (!FileExist(paletteTitle) || !FileExist(paletteButton)) {
         Say "Error: some sample file is missing"  
       } else {
-        Key "{Space}{Left 2}+{Right 3}"
+        Send "{Space}{Left 2}+{Right 3}"
         CoordMode "Pixel", "Screen"
         activatePalette := 0
         SearchCharacter:
@@ -75,7 +75,7 @@
           if activatePalette {
             Say "Error (" ErrorLevel "): palette not found" 
           } else {
-            Key "{F3}" ;character palette hotkey
+            Send "{F3}" ;character palette hotkey
             sleep 200
             activatePalette := 1
             Goto SearchCharacter
@@ -98,8 +98,8 @@
         MouseGetPos mouseX, mouseY
         for k, v in alignTo {
           file := "ai\align-" v ".png"
-          if !FileExist(alignFileName) {
-            Say "Error: file " alignFileName " is missing" 
+          if !FileExist(file) {
+            Say "Error: file " file " is missing" 
             return
           } else {
             CoordMode "Pixel", "Screen"
