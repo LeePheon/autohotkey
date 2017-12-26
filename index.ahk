@@ -27,7 +27,7 @@ caretLang() {
 ;--------
 ; GLOBAL
 ;--------
-#ifWinActive 
+#ifWinActive
 
 ;----- snippets
   #Include *i snippets.ahk
@@ -35,7 +35,7 @@ caretLang() {
 ;----- lshift/rshift - switch keyboard layout (en/ru)
   ~LShift up::
     if A_PriorKey = "LShift" {
-      Lang "English" 
+      Lang "English"
       Say "En", , A_CaretX + 3, A_CaretY + 20
     }
     return
@@ -72,14 +72,14 @@ caretLang() {
     return
 
 ;win-` - toggle explorer window
-  #`:: 
+  #`::
     if WinExist("ahk_class CabinetWClass") {
       if WinActive("ahk_class CabinetWClass") {
         WinMinimize
         Say "Minimize Explorer"
-      } else { 
+      } else {
         WinRestore
-        WinActivate  
+        WinActivate
         Say "Restore Explorer"
       }
     } else {
@@ -89,7 +89,7 @@ caretLang() {
     return
 
 ;ctrl-tab <-> alt-tab
-  $<^Tab::AltTab 
+  $<^Tab::AltTab
   $!Tab::
     Send "{Ctrl down}{Tab down}"
     KeyWait "LAlt"
@@ -97,7 +97,7 @@ caretLang() {
     return
 
 ;fn-delete - dropbox url patch
-  Break:: 
+  Break::
     if SubStr(Clipboard, 1, 19) = "https://www.dropbox" {
       Clipboard := RegexReplace(Clipboard, "^(.*?)www\.(.*?)\?.*?$", "$1dl.$2")
       Say "Dropbox link converted in clipboard"
@@ -105,16 +105,16 @@ caretLang() {
     return
 
 ;win-f12 - toggle window transparency
-  #f12:: 
+  #f12::
     steps := 4
-    trans := WinGetTransparent("A") 
-    trans := trans ? trans - 255/steps : 255 - 255/steps 
+    trans := WinGetTransparent("A")
+    trans := trans ? trans - 255/steps : 255 - 255/steps
     WinSetTransparent trans > 0 ? trans : "OFF", "A"
     return
 
 ;----- Autohotkey
   #Escape:: ;win-escape - reload
-    lng := GetLang() 
+    lng := GetLang()
     IniWrite(lng, "settings.ini", "Settings", "Language")
     if lng != "English" {
       Lang "English"
@@ -137,13 +137,13 @@ caretLang() {
     return
 
 ;------ Spotlight alternatives
-  !Escape::Send "+!^{Escape}" ;alt-escape - wox 
+  !Escape::Send "+!^{Escape}" ;alt-escape - wox
   ^!Escape::Send "+{Escape}" ;ctrl-alt-escape - everything
 
 ;--------------
 ; APPLICATIONS
 ;--------------
-  #ifWinActive ahk_exe chrome.exe 
+  #ifWinActive ahk_exe chrome.exe
     f1::Key "^t"                  ;new tab
     f2::Key "^{PgUp}"             ;prev tab
     f3::Key "^{PgDn}"             ;next tab
@@ -157,14 +157,14 @@ caretLang() {
     $f2::Key "+{f3}"              ;prev tab
     $+f2::Key "{f2}"              ;rename
     ^+Del::                       ;empty recycle bin
-      FileRecycleEmpty       
+      FileRecycleEmpty
       if !ErrorLevel {
         Say "Recycled"
       }
       return
     !n::                          ;move selected files to new folder
       Say "Move selected to new folder"
-      ClipSaved := ClipboardAll() 
+      ClipSaved := ClipboardAll()
       Send "^{vk58}"  ;cut selection
       Sleep 200
       Send "^+{vk4E}" ;new folder
@@ -182,7 +182,7 @@ caretLang() {
       ClipSaved := ""
       return
 
-  #ifWinActive ahk_exe firefox.exe 
+  #ifWinActive ahk_exe firefox.exe
     #.::                          ;prefs
       Key "!t"
       Sleep 100
@@ -192,14 +192,14 @@ caretLang() {
     f1::Key "^{vk54}"             ;new tab
     f2::Key "^{PgUp}"             ;prev tab
     f3::Key "^{PgDn}"             ;next tab
-    f4::Key "+^t"                 ;undo close tab 
+    f4::Key "+^t"                 ;undo close tab
 
   #ifWinActive ahk_exe hh.exe     ;Windows Help
     Escape::WinClose "A"
   #Include *i illustrator.ahk
 
 ;------ Graphics
-  #ifWinActive ANSYS SpaceClaim 
+  #ifWinActive ANSYS SpaceClaim
      `::Key "p"                   ;push
     +`::Key "m"                   ;move
     !`::Key "o"                   ;pie menu
@@ -213,55 +213,55 @@ caretLang() {
   #ifWinActive ahk_exe blender.exe
     #.::Key "^!u"                 ;prefs
     #`::Key "^!+c"                ;set origin
-   *#q::KeyMod "{Numpad7}", "#"   ;view ortho top         
-   *#w::KeyMod "{Numpad8}", "#"   ;view rotate up
-   *#e::KeyMod "{Numpad9}", "#"   ;view ortho bottom
+   *#q::KeyMod "{Numpad7}",   "#" ;view ortho top
+   *#w::KeyMod "{Numpad8}",   "#" ;view rotate up
+   *#e::KeyMod "{Numpad9}",   "#" ;view ortho bottom
    *#r::KeyMod "{NumpadDiv}", "#" ;view local (isolate)
    *#t::KeyMod "{NumpadMul}", "#" ;grease isolate layer
-   *#a::KeyMod "{Numpad4}", "#"   ;view rotate left 
-   *#s::KeyMod "{Numpad5}", "#"   ;view perspective/ortho
-   *#d::KeyMod "{Numpad6}", "#"   ;view rotate right
+   *#a::KeyMod "{Numpad4}",   "#" ;view rotate left
+   *#s::KeyMod "{Numpad5}",   "#" ;view perspective/ortho
+   *#d::KeyMod "{Numpad6}",   "#" ;view rotate right
    *#f::KeyMod "{NumpadSub}", "#" ;view zoom-
    *#g::KeyMod "{NumpadAdd}", "#" ;view zoom+
-   *#z::KeyMod "{Numpad1}", "#"   ;view ortho front
-   *#x::KeyMod "{Numpad2}", "#"   ;view rotate down
-   *#c::KeyMod "{Numpad3}", "#"   ;view right
-   *#v::KeyMod "{Numpad0}", "#"   ;view camera
+   *#z::KeyMod "{Numpad1}",   "#" ;view ortho front
+   *#x::KeyMod "{Numpad2}",   "#" ;view rotate down
+   *#c::KeyMod "{Numpad3}",   "#" ;view right
+   *#v::KeyMod "{Numpad0}",   "#" ;view camera
    *#b::KeyMod "{NumpadDot}", "#" ;view selected
    *#Space::KeyMod "{NumpadEnter}", "#"
     return
-  
-  #IfWinActive ahk_exe CINEMA 4D.exe
-    MButton::Mouse "M", "LAlt", "MButton"      
-    RButton::Mouse "R", "LAlt", "LButton"       
 
-  #ifWinActive ahk_exe FreeCAD.exe 
-    RButton::Mouse "R", "MButton", "LButton"     
+  #IfWinActive ahk_exe CINEMA 4D.exe
+    MButton::Mouse "M", "LAlt", "MButton"
+    RButton::Mouse "R", "LAlt", "LButton"
+
+  #ifWinActive ahk_exe FreeCAD.exe
+    RButton::Mouse "R", "MButton", "LButton"
 
   #ifWinActive ahk_exe Fusion360.exe
-    MButton::Mouse "M", "LCtrl", "LShift", "MButton" 
-    RButton::Mouse "R", "MButton"     
+    MButton::Mouse "M", "LCtrl", "LShift", "MButton"
+    RButton::Mouse "R", "MButton"
 
   #ifWinActive ahk_exe GravitDesigner.exe
     MButton::Mouse "M", "Space", "LButton"
     WheelDown::Send "^{WheelDown}"
     WheelUp::Send "^{WheelUp}"
 
-  #ifWinActive ahk_exe LeoCAD.exe 
-    MButton::Mouse "M", "LAlt", "MButton"     
-    RButton::Mouse "R", "LAlt", "LButton"     
+  #ifWinActive ahk_exe LeoCAD.exe
+    MButton::Mouse "M", "LAlt", "MButton"
+    RButton::Mouse "R", "LAlt", "LButton"
 
   #IfWinActive ahk_exe modo.exe
-    MButton::Mouse "M", "LAlt", "LShift", "LButton" 
-    RButton::Mouse "R", "LAlt", "LButton"          
+    MButton::Mouse "M", "LAlt", "LShift", "LButton"
+    RButton::Mouse "R", "LAlt", "LButton"
 
   #ifWinActive ahk_exe keyshot6.exe
-    RButton::Mouse "R", "LButton"                  
+    RButton::Mouse "R", "LButton"
 
   #IfWinActive ahk_exe Rocket3F.exe
-    MButton::Mouse "M", "LAlt"                    
-    RButton::Mouse "R", "LAlt", "LButton"         
+    MButton::Mouse "M", "LAlt"
+    RButton::Mouse "R", "LAlt", "LButton"
 
   #ifWinActive ahk_exe SketchUp.exe
-    MButton::Mouse "M", "LShift", "MButton"       
-    RButton::Mouse "R", "MButton"                
+    MButton::Mouse "M", "LShift", "MButton"
+    RButton::Mouse "R", "MButton"

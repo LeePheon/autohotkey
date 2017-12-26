@@ -63,7 +63,7 @@ KeyMod(string, exclude := "") {
 
 ;emulate mouse click with modifier (for 3d apps)
 Mouse(action, keys*) { 
-  ;action - L/M/R - binded mouse button
+  ;action - L/M/R - bound mouse button
   
   MouseGetPos mouseX1, mouseY1
   loop keys.Length() {
