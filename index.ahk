@@ -15,13 +15,10 @@ if FileExist(cfg) {
 }
 
 ;display active keyboard layout under text caret
-caret := [A_CaretX, A_CaretY]
-SetTimer "caretLang", 100
+SetTimer "caretLang", 200
 caretLang() {
-  global caret
   if A_CaretX {
-    caret := [A_CaretX, A_CaretY]
-    ToolTip SubStr(GetLang(), 1, 2), caret[1] + 3, caret[2] + 20, 2
+    ToolTip SubStr(GetLang(), 1, 2), A_CaretX + 3, A_CaretY + 20, 2
   } else {
     ToolTip ,,, 2
   }
