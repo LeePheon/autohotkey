@@ -1,4 +1,4 @@
-; ^ ctrl, ! alt, + shift, # win
+п»ї; ^ ctrl, ! alt, + shift, # win
 ;---------- Autorun
 
 ;SetTimer, XaraFail ;close some crap windows
@@ -13,7 +13,7 @@ MoItrial:
       WinActivate
       WinClose
     }
-    IfWinExist, MoI-триал, MoI
+    IfWinExist, MoI-С‚СЂРёР°Р», MoI
     {
       WinActivate
       WinClose
