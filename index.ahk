@@ -14,6 +14,19 @@ if FileExist(cfg) {
   }
 }
 
+;display active keyboard layout under text caret
+caret := [A_CaretX, A_CaretY]
+SetTimer "caretLang", 100
+caretLang() {
+  global caret
+  if A_CaretX {
+    caret := [A_CaretX, A_CaretY]
+    ToolTip SubStr(GetLang(), 1, 2), caret[1] + 3, caret[2] + 20, 2
+  } else {
+    ToolTip ,,, 2
+  }
+}
+
 ;--------
 ; GLOBAL
 ;--------
@@ -26,13 +39,13 @@ if FileExist(cfg) {
   ~LShift up::
     if A_PriorKey = "LShift" {
       Lang "English" 
-      Say "EN", , A_CaretX + 3, A_CaretY + 20
+      Say "En", , A_CaretX + 3, A_CaretY + 20
     }
     return
   ~RShift up::
     if A_PriorKey = "RShift" {
       Lang "Russian"
-      Say "RU", , A_CaretX + 3, A_CaretY + 20
+      Say "Ru", , A_CaretX + 3, A_CaretY + 20
     }
     return
 
