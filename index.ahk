@@ -17,10 +17,29 @@ if FileExist(cfg) {
 ;display active keyboard layout under text caret
 SetTimer "caretLang", 200
 caretLang() {
+  timeout := 10 
+  static state := timeout
+  static lastWinId := 0
   if A_CaretX {
-    ToolTip SubStr(GetLang(), 1, 2), A_CaretX + 3, A_CaretY + 20, 2
+    curWinId := WinActive("A")
+    if curWinId != lastWinId {
+      state := timeout
+      lastWinId := curWinId
+    }
+    if state > 0 {
+      ToolTip SubStr(GetLang(), 1, 2), A_CaretX + 3, A_CaretY + 20, 2
+      state--
+    } else {
+      if state = 0 {
+        ToolTip ,,, 2
+        state := -1
+      }
+    }
   } else {
-    ToolTip ,,, 2
+    if state > -1 {
+      ToolTip ,,, 2
+      state := -1
+    }
   }
 }
 
@@ -36,12 +55,14 @@ caretLang() {
   ~LShift up::
     if A_PriorKey = "LShift" {
       Lang "English"
+      caretLangState := caretLangTimeout
       Say "En", , A_CaretX + 3, A_CaretY + 20
     }
     return
   ~RShift up::
     if A_PriorKey = "RShift" {
       Lang "Russian"
+      caretLangState := caretLangTimeout
       Say "Ru", , A_CaretX + 3, A_CaretY + 20
     }
     return
@@ -194,21 +215,54 @@ caretLang() {
     f3::Key "^{PgDn}"             ;next tab
     f4::Key "+^t"                 ;undo close tab
 
-  #ifWinActive ahk_exe hh.exe     ;Windows Help
+  #ifWinActive ahk_exe hh.exe     ;windows help
     Escape::WinClose "A"
   #Include *i illustrator.ahk
 
 ;------ Graphics
   #ifWinActive ANSYS SpaceClaim
-     `::Key "p"                   ;push
-    +`::Key "m"                   ;move
-    !`::Key "o"                   ;pie menu
-    ^+z::Key "^y"                 ;redo
     $!f1::Send "{f1}"             ;help
     f1::Click "100 40"            ;first tab
     f2::Click "1100 40 WheelUp"   ;prev tab
     f3::Click "1100 40 WheelDown" ;next tab
     f4::Click "660 40"            ;middle tab
+    #.::Key "^+."                 ;prefs
+   ^+z::Key "^y"                  ;redo
+     `::Key "o"                   ;pie menu
+     y::Key "p"                   ;push
+     g::Key "m"                   ;move
+    $!1::                         ;toggle transparent/opaque
+      if scTransparent := !scTransparent {
+        Key "+!1"
+        Say "Transparent"
+      } else {
+        Key "!1"
+        Say "Opaque"
+      }
+      return
+    $!2::                         ;toggle perspective/ortho
+      if scPerspective := !scPerspective {
+        Key "+!2"
+        Say "Perspective"
+      } else {
+        Key "!2"
+        Say "Ortho"
+      }
+      return
+    !3::
+      Send "{RButton}{Down 6}{Right}{Enter}"
+      return
+    ^!3::
+      Send "{RButton}{Down 6}{Right}{Down}{Enter}"
+      return
+    ^+3::
+      Send "{RButton}{Down 6}{Right}{Down 2}"
+      Sleep 50
+      Send "{Enter}"
+      return
+     !4::
+       Send "{RButton}{Down 4}{Rigt}"
+       return
 
   #ifWinActive ahk_exe blender.exe
     #.::Key "^!u"                 ;prefs
