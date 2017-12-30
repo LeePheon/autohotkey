@@ -1304,12 +1304,12 @@
         Say "Preferences/General..."
         return
 
-      !^,::
+      !#,::
         Key "!ek"
         Say "Keyboard Shortcuts..."
         return
 
-      ^,::
+      #,::
         Key "!frmss{Enter}"
         Say "Set Unit Type to Pixel"
         return
@@ -1326,9 +1326,14 @@
       ;<blend mode - next>
       ;<blend mode - darken>
 
-      #.::
+      ^.::
         Key "!^." 
         Say "Other Misc/Switch Ruler Units"
+        return
+
+      #.::
+        Key "!frms{Enter}" 
+        Say "Set Unit Type to Milimeters"
         return
 
       ~+^.::
@@ -1337,11 +1342,6 @@
 
       ~+!^.::
         Say "Other Text/Font Size Step Up"
-        return
-
-      ^.::
-        Key "!frms{Enter}" 
-        Say "Set Unit Type to Milimeters"
         return
 
     ;/
