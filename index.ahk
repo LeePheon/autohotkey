@@ -14,10 +14,10 @@ if FileExist(cfg) {
   }
 }
 
-;display active keyboard layout under text caret
+;display active keyboard layout under text caret (doesn't work in some apps)
 SetTimer "caretLang", 200
 caretLang() {
-  timeout := 10 
+  static timeout := 10 
   static state := timeout
   static lastWinId := 0
   if A_CaretX {
@@ -29,15 +29,14 @@ caretLang() {
     if state > 0 {
       ToolTip SubStr(GetLang(), 1, 2), A_CaretX + 3, A_CaretY + 20, 2
       state--
-    } else {
-      if state = 0 {
-        ToolTip ,,, 2
-        state := -1
-      }
+    } else if state = 0 {
+      ToolTip ,,, 2
+      state := -1
     }
   } else {
     if state > -1 {
       ToolTip ,,, 2
+      lastWinId := 0
       state := -1
     }
   }
@@ -68,15 +67,21 @@ caretLang() {
     return
 
 ;----- macos
+  ^w:: ;close document
+    if !WinActive("ahk_exe cmd.exe") {
+      Send "^{f4}"
+    }
+    return
+  ^q:: ;quit app
+    if !WinActive("ahk_exe cmd.exe") {
+      Send "!{f4}"
+    }
+    return
+  ^#Space::Send "{U+00A0}" ;nbsp
   ;!Left::Send "^{Left}"
   ;!Right::Send "^{Right}"
   ;+!Left::Send "+^{Left}"
   ;+!Right::Send "+^{Right}"
-  ^#Space::Send "{U+00A0}" ;nbsp
-
-  #IfWinNotActive ahk_exe cmd.exe
-    ^w::Send "^{f4}"
-    ^q::Send "!{f4}"
 
   #IfWinActive
   ;win-1..0 - disable taskbar application hotkeys
@@ -120,7 +125,7 @@ caretLang() {
 ;fn-delete - dropbox url patch
   Break::
     if SubStr(Clipboard, 1, 19) = "https://www.dropbox" {
-      Clipboard := RegexReplace(Clipboard, "^(.*?)www\.(.*?)\?.*?$", "$1dl.$2")
+      Clipboard := RegexReplace(Clipboard, "^(.*?)www\.(.*?)(?:\?.*?)*$", "$1dl.$2")
       Say "Dropbox link converted in clipboard"
     }
     return
@@ -134,6 +139,10 @@ caretLang() {
     return
 
 ;----- Autohotkey
+  !`:: ;alt-` - toggle all hotkeys
+    Suspend
+    Say A_IsSuspended ? "AutoHotkey Suspended" : "AutoHotkey Resumed"
+    return 
   #Escape:: ;win-escape - reload
     lng := GetLang()
     IniWrite(lng, "settings.ini", "Settings", "Language")
@@ -308,6 +317,7 @@ caretLang() {
   #IfWinActive ahk_exe modo.exe
     MButton::Mouse "M", "LAlt", "LShift", "LButton"
     RButton::Mouse "R", "LAlt", "LButton"
+    $^w::Key "^w" ;close scene
 
   #ifWinActive ahk_exe keyshot6.exe
     RButton::Mouse "R", "LButton"
@@ -319,3 +329,4 @@ caretLang() {
   #ifWinActive ahk_exe SketchUp.exe
     MButton::Mouse "M", "LShift", "MButton"
     RButton::Mouse "R", "MButton"
+  
