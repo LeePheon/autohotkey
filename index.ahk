@@ -139,11 +139,7 @@ caretLang() {
     return
 
 ;----- Autohotkey
-  !`:: ;alt-` - toggle all hotkeys
-    Suspend
-    Say A_IsSuspended ? "AutoHotkey Suspended" : "AutoHotkey Resumed"
-    return 
-  #Escape:: ;win-escape - reload
+  #Escape:: ;win-esc - reload
     lng := GetLang()
     IniWrite(lng, "settings.ini", "Settings", "Language")
     if lng != "English" {
@@ -152,7 +148,11 @@ caretLang() {
     Sleep 100
     Reload
     return
-  +#Escape:: ;shift-win-escape - toggle autohotkey window
+  ^#Escape:: ;ctrl-win-esc - toggle all hotkeys
+    Suspend
+    Say A_IsSuspended ? "AutoHotkey Suspended" : "AutoHotkey Resumed"
+    return 
+  +#Escape:: ;shift-win-esc - toggle autohotkey window
     DetectHiddenWindows "On"
     ahk := "ahk_class AutoHotkey"
     if WinExist(ahk) {
@@ -185,14 +185,16 @@ caretLang() {
   #ifWinActive ahk_class CabinetWClass ;explorer.exe (QTTabBar)
     #.::Key "!o"                  ;prefs
     $f2::Key "+{f3}"              ;prev tab
-    $+f2::Key "{f2}"              ;rename
-    ^+Del::                       ;empty recycle bin
+    $+f2::Key "{f2}"              ;shift-f2 - rename
+    ^+Del::                       ;shift-del - empty recycle bin
       FileRecycleEmpty
       if !ErrorLevel {
         Say "Recycled"
       }
       return
-    !n::                          ;move selected files to new folder
+    ^i::Send "!{Enter}"           ;ctrl-i - show file info
+      return
+    !n::                          ;alt-n - move selected files to new folder
       Say "Move selected to new folder"
       ClipSaved := ClipboardAll()
       Send "^{vk58}"  ;cut selection
@@ -230,17 +232,17 @@ caretLang() {
 
 ;------ Graphics
   #ifWinActive ANSYS SpaceClaim
-    $!f1::Send "{f1}"             ;help
+    #.::Key "^+."                 ;prefs
     f1::Click "100 40"            ;first tab
     f2::Click "1100 40 WheelUp"   ;prev tab
     f3::Click "1100 40 WheelDown" ;next tab
     f4::Click "660 40"            ;middle tab
-    #.::Key "^+."                 ;prefs
+    $!f1::Send "{f1}"             ;alt-f1 - help
    ^+z::Key "^y"                  ;redo
      `::Key "o"                   ;pie menu
      y::Key "p"                   ;push
      g::Key "m"                   ;move
-    $!1::                         ;toggle transparent/opaque
+    $!1::                         ;alt-1 - toggle transparent/opaque
       if scTransparent := !scTransparent {
         Key "+!1"
         Say "Transparent"
@@ -249,7 +251,7 @@ caretLang() {
         Say "Opaque"
       }
       return
-    $!2::                         ;toggle perspective/ortho
+    $!2::                         ;alt-2 - toggle perspective/ortho
       if scPerspective := !scPerspective {
         Key "+!2"
         Say "Perspective"
