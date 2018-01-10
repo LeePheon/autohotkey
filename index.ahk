@@ -225,6 +225,34 @@ caretLang() {
     f2::Key "^{PgUp}"             ;prev tab
     f3::Key "^{PgDn}"             ;next tab
     f4::Key "+^t"                 ;undo close tab
+    f11::                         ;toggle vpn
+      iconsNotFound := 0
+      vpn := ["vpn0", "vpn1"] 
+      MouseGetPos mouseX, mouseY
+      for k, v in vpn {
+        file := "ff\" v ".png"
+        if !FileExist(file) {
+          Say "Error: file " file " is missing" 
+          return
+        } else {
+          CoordMode "Pixel", "Window"
+          ImageSearch iconX, iconY, 0, 0, A_ScreenWidth, A_ScreenHeight, file
+          if ErrorLevel = 0 {
+            Click iconX " " iconY 
+            Sleep 1000
+            Click iconX " " iconY + 140
+            Send "{Escape}"
+            MouseMove mouseX, mouseY
+            return
+          } else {
+            iconsNotFound++ 
+          }
+        }
+      }
+      if iconsNotFound = vpn.Length() {
+        Say "Error(" ErrorLevel "): icon not found"
+      }
+      return
 
   #ifWinActive ahk_exe hh.exe     ;windows help
     Escape::WinClose "A"
