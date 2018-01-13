@@ -1,5 +1,21 @@
 ﻿#Hotstring EndChars `t
 #Include *i ..\snippets_my.ahk 
+#Include *i ..\snippets_work.ahk 
+
+; *  - ending char is not required
+; ?  - trigger inside word (?0 - turn it off)
+; b0 - turn off auto backspacing (b - turn it on)
+; c  - case sensitive (c0 - turn it off)
+; c1 - case conform (abc, Abc, ABC expands hotstring approrpiate)
+; kN - key delay (in ms, -1 is no delay)
+; o  - omit ending char
+; pN - priority ???
+; r  - send raw (r0 - turn it off)
+; si/sp/se - method to send: sendinput/sendplay/sendevent (si - default)
+; t  - send raw without translating character to keystroke (t0/r0 - turn it off) ???
+; z  - reset hotstring recognition (for preventing recursion on b0 is off) (z0 - turn it off)
+
+#IfWinActive
 
 :o:im::
   Sleep 50
