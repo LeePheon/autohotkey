@@ -47,6 +47,32 @@ caretLang() {
 ;--------
 #ifWinActive
 
+;----- vim (win-hjkl, win-shift-hjkl)
+LWin & vk48:: ;h
+  if GetKeyState("Shift")
+    Send "{Home}"
+  else
+    Send "{Left}"
+  return
+LWin & vk4A:: ;j
+  if GetKeyState("Shift")
+    Send "{PgDn}"
+  else
+    Send "{Down}"
+  return
+LWin & vk4B:: ;k
+  if GetKeyState("Shift")
+    Send "{PgUp}"
+  else
+    Send "{Up}"
+  return
+LWin & vk4C:: ;l
+  if GetKeyState("Shift")
+    Send "{End}"
+  else
+    Send "{Right}"
+  return
+
 ;----- snippets
   #Include *i snippets.ahk
 
@@ -125,8 +151,10 @@ caretLang() {
 ;fn-delete - dropbox url patch
   Break::
     if SubStr(Clipboard, 1, 19) = "https://www.dropbox" {
-      Clipboard := RegexReplace(Clipboard, "^(.*?)www\.(.*?)(?:\?.*?)*$", "$1dl.$2")
+      Clipboard := RegexReplace(Clipboard, "^(.*?)www\.dropbox(.*?)(?:\?.*?)*$", "$1dl.dropboxusercontent$2")
       Say "Dropbox link converted in clipboard"
+    } else {
+      Say "Clipboard is not contains Dropbox link"
     }
     return
 
