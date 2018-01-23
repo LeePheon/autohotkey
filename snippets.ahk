@@ -48,8 +48,8 @@
 :o?:+-::{U+00B1}  ;plus-minus
 :o?:/=::{U+2260}  ;not equal to
 :o?:.=::{U+2260}
-:o?:x::{U+00D7}   ;multiplication
-:o?:ч::{U+00D7}
+:o:x::{U+00D7}   ;multiplication
+:o:ч::{U+00D7}
 :o?:(/)::{U+2300} ;diameter
 :o?:)::{U+00B0}   ;degree
 :o?:...::{U+2026} ;ellipsis
