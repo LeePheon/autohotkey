@@ -768,6 +768,11 @@
         Say "Path/Join"
         return
 
+     !^j::
+        Key "!frpcccc{Enter}" 
+        Say "Path/Close"
+        return
+
       +^j::
         Key "!op{Enter}{Down 3}{Enter}" 
         Say "Path/Concatenate"
