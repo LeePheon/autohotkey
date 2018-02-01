@@ -428,19 +428,21 @@
         return
 
       #4:: ;cut path
-        MouseGetPos mouseX, mouseY
-        file := "ai\cut-path.png"
-        if !FileExist(file) {
-          Say "Error: file " file " is missing" 
-        } else {
-          CoordMode "Pixel", "Screen"
-          ImageSearch iconX, iconY, 0, 0, A_ScreenWidth, A_ScreenHeight, file
-          if ErrorLevel = 0 {
-            Click iconX " " iconY
-            MouseMove mouseX, mouseY
-            Say "Cut Path"
-          }
-        }
+        Key "!frpcccccc{Enter}" 
+        Say "Cut Path"
+        ; MouseGetPos mouseX, mouseY
+        ; file := "ai\cut-path.png"
+        ; if !FileExist(file) {
+        ;   Say "Error: file " file " is missing" 
+        ; } else {
+        ;   CoordMode "Pixel", "Screen"
+        ;   ImageSearch iconX, iconY, 0, 0, A_ScreenWidth, A_ScreenHeight, file
+        ;   if ErrorLevel = 0 {
+        ;     Click iconX " " iconY
+        ;     MouseMove mouseX, mouseY
+        ;     Say "Cut Path"
+        ;   }
+        ; }
         return
 
     ;5
