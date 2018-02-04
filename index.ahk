@@ -152,9 +152,9 @@ LWin & vk4C:: ;l
   Break::
     if SubStr(Clipboard, 1, 19) = "https://www.dropbox" {
       Clipboard := RegexReplace(Clipboard, "^(.*?)www\.dropbox(.*?)(?:\?.*?)*$", "$1dl.dropboxusercontent$2")
-      Say "Dropbox link converted in clipboard"
+      Say "DropBox link converted"
     } else {
-      Say "Clipboard is not contains Dropbox link"
+      Say "No DropBox link in clipboard"
     }
     return
 
@@ -387,4 +387,5 @@ LWin & vk4C:: ;l
   #ifWinActive ahk_exe SketchUp.exe
     MButton::Mouse "M", "LShift", "MButton"
     RButton::Mouse "R", "MButton"
-  
+
+ #IfWinActive
