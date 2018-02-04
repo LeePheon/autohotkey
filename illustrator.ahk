@@ -1,5 +1,5 @@
 ﻿;---------- illustrator
-#ifWinActive ahk_exe Illustrator.exe
+#if WinActive("ahk_exe Illustrator.exe")
 
   ;;mouse
     +#LButton:: ;shift-win-lmb - unlock clicked object
@@ -1390,4 +1390,4 @@
         Say "Blend/Reverse Spine"
         return
 
-#IfWinActive
+#if

@@ -1,6 +1,6 @@
-﻿#Hotstring EndChars `t
-#Include *i ..\snippets_my.ahk 
-#Include *i ..\snippets_work.ahk 
+﻿#hotstring EndChars `t
+#include *i ..\snippets_my.ahk 
+#include *i ..\snippets_work.ahk 
 
 ; *  - ending char is not required
 ; ?  - trigger inside word (?0 - turn it off)
@@ -14,8 +14,6 @@
 ; si/sp/se - method to send: sendinput/sendplay/sendevent (si - default)
 ; t  - send raw without translating character to keystroke (t0/r0 - turn it off) ???
 ; z  - reset hotstring recognition (for preventing recursion on b0 is off) (z0 - turn it off)
-
-#IfWinActive
 
 :o:im::
   Sleep 50

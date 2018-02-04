@@ -1,9 +1,22 @@
 ﻿;!alt ^ctrl +shift #win
 
 SetKeyDelay -1
-#Include functions.ahk
+#include functions.ahk
 Say "AutoHotkey Loaded"
 ; #Include *i -\keypress-osd.ahk
+
+ClipChanged(Type) {
+;fn-delete - dropbox url patch
+  ; Break::
+    if SubStr(Clipboard, 1, 19) = "https://www.dropbox" {
+      Clipboard := RegexReplace(Clipboard, "^(.*?)www\.dropbox(.*?)(?:\?.*?)*$", "$1dl.dropboxusercontent$2")
+      Say "DropBox link converted"
+    } else {
+      Say "No DropBox link in clipboard"
+    }
+    ; return
+}
+OnClipboardChange("ClipChanged")
 
 ;restore keyboard layout
 cfg := "settings.ini"
@@ -45,7 +58,6 @@ caretLang() {
 ;--------
 ; GLOBAL
 ;--------
-#ifWinActive
 
 ;----- vim (win-hjkl, win-shift-hjkl)
 LWin & vk48:: ;h
@@ -74,7 +86,7 @@ LWin & vk4C:: ;l
   return
 
 ;----- snippets
-  #Include *i snippets.ahk
+  #include *i snippets.ahk
 
 ;----- lshift/rshift - switch keyboard layout (en/ru)
   ~LShift up::
@@ -109,19 +121,18 @@ LWin & vk4C:: ;l
   ;+!Left::Send "+^{Left}"
   ;+!Right::Send "+^{Right}"
 
-  #IfWinActive
-  ;win-1..0 - disable taskbar application hotkeys
-    *#1::
-    *#2::
-    *#3::
-    *#4::
-    *#5::
-    *#6::
-    *#7::
-    *#8::
-    *#9::
-    *#0::
-    return
+;win-1..0 - disable taskbar application hotkeys
+  *#1::
+  *#2::
+  *#3::
+  *#4::
+  *#5::
+  *#6::
+  *#7::
+  *#8::
+  *#9::
+  *#0::
+  return
 
 ;win-` - toggle explorer window
   #`::
@@ -148,16 +159,6 @@ LWin & vk4C:: ;l
     Send "{Ctrl up}"
     return
 
-;fn-delete - dropbox url patch
-  Break::
-    if SubStr(Clipboard, 1, 19) = "https://www.dropbox" {
-      Clipboard := RegexReplace(Clipboard, "^(.*?)www\.dropbox(.*?)(?:\?.*?)*$", "$1dl.dropboxusercontent$2")
-      Say "DropBox link converted"
-    } else {
-      Say "No DropBox link in clipboard"
-    }
-    return
-
 ;win-f12 - toggle window transparency
   #f12::
     steps := 4
@@ -177,7 +178,7 @@ LWin & vk4C:: ;l
     Reload
     return
   ^#Escape:: ;ctrl-win-esc - toggle all hotkeys
-    Suspend
+    Suspend 
     Say A_IsSuspended ? "AutoHotkey Suspended" : "AutoHotkey Resumed"
     return 
   +#Escape:: ;shift-win-esc - toggle autohotkey window
@@ -201,16 +202,16 @@ LWin & vk4C:: ;l
 ;--------------
 ; APPLICATIONS
 ;--------------
-  #ifWinActive ahk_exe chrome.exe
+  #if WinActive("ahk_exe chrome.exe")
     f1::Key "^t"                  ;new tab
     f2::Key "^{PgUp}"             ;prev tab
     f3::Key "^{PgDn}"             ;next tab
     f4::Key "+^t"                 ;undo close tab
 
-  #IfWinActive ahk_exe Code.exe   ;VSCode
+  #if WinActive("ahk_exe Code.exe") ;VSCode
     #.::Send "^,"                 ;prefs
 
-  #ifWinActive ahk_class CabinetWClass ;explorer.exe (QTTabBar)
+  #if WinActive("ahk_class CabinetWClass") ;explorer.exe (QTTabBar)
     #.::Key "!o"                  ;prefs
     $f2::Key "+{f3}"              ;prev tab
     $+f2::Key "{f2}"              ;shift-f2 - rename
@@ -242,7 +243,7 @@ LWin & vk4C:: ;l
       ClipSaved := ""
       return
 
-  #ifWinActive ahk_exe firefox.exe
+  #if WinActive("ahk_exe firefox.exe")
     #.::                          ;prefs
       Key "!t"
       Sleep 100
@@ -282,12 +283,12 @@ LWin & vk4C:: ;l
       }
       return
 
-  #ifWinActive ahk_exe hh.exe     ;windows help
+  #if WinActive("ahk_exe hh.exe")     ;windows help
     Escape::WinClose "A"
   #Include *i illustrator.ahk
 
 ;------ Graphics
-  #ifWinActive ANSYS SpaceClaim
+  #if WinActive("ANSYS SpaceClaim")
     #.::Key "^+."                 ;prefs
     f1::Click "100 40"            ;first tab
     f2::Click "1100 40 WheelUp"   ;prev tab
@@ -331,7 +332,7 @@ LWin & vk4C:: ;l
        Send "{RButton}{Down 4}{Rigt}"
        return
 
-  #ifWinActive ahk_exe blender.exe
+  #if WinActive("ahk_exe blender.exe")
     #.::Key "^!u"                 ;prefs
     #`::Key "^!+c"                ;set origin
    *#q::KeyMod "{Numpad7}",   "#" ;view ortho top
@@ -352,40 +353,40 @@ LWin & vk4C:: ;l
    *#Space::KeyMod "{NumpadEnter}", "#"
     return
 
-  #IfWinActive ahk_exe CINEMA 4D.exe
+  #if WinActive("ahk_exe CINEMA 4D.exe")
     MButton::Mouse "M", "LAlt", "MButton"
     RButton::Mouse "R", "LAlt", "LButton"
 
-  #ifWinActive ahk_exe FreeCAD.exe
+  #if WinActive("ahk_exe FreeCAD.exe")
     RButton::Mouse "R", "MButton", "LButton"
 
-  #ifWinActive ahk_exe Fusion360.exe
+  #if WinActive("ahk_exe Fusion360.exe")
     MButton::Mouse "M", "LCtrl", "LShift", "MButton"
     RButton::Mouse "R", "MButton"
 
-  #ifWinActive ahk_exe GravitDesigner.exe
+  #if WinActive("ahk_exe GravitDesigner.exe")
     MButton::Mouse "M", "Space", "LButton"
     WheelDown::Send "^{WheelDown}"
     WheelUp::Send "^{WheelUp}"
 
-  #ifWinActive ahk_exe LeoCAD.exe
+  #if WinActive("ahk_exe LeoCAD.exe")
     MButton::Mouse "M", "LAlt", "MButton"
     RButton::Mouse "R", "LAlt", "LButton"
 
-  #IfWinActive ahk_exe modo.exe
+  #if WinActive("ahk_exe modo.exe")
     MButton::Mouse "M", "LAlt", "LShift", "LButton"
     RButton::Mouse "R", "LAlt", "LButton"
     $^w::Key "^w" ;close scene
 
-  #ifWinActive ahk_exe keyshot6.exe
+  #if WinActive("ahk_exe keyshot6.exe")
     RButton::Mouse "R", "LButton"
 
-  #IfWinActive ahk_exe Rocket3F.exe
+  #if WinActive("ahk_exe Rocket3F.exe")
     MButton::Mouse "M", "LAlt"
     RButton::Mouse "R", "LAlt", "LButton"
 
-  #ifWinActive ahk_exe SketchUp.exe
+  #if WinActive("ahk_exe SketchUp.exe")
     MButton::Mouse "M", "LShift", "MButton"
     RButton::Mouse "R", "MButton"
 
- #IfWinActive
+ #if
