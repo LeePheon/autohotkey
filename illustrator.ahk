@@ -56,7 +56,7 @@
       if (!FileExist(paletteTitle) || !FileExist(paletteButton)) {
         Say "Error: some sample file is missing"  
       } else {
-        Send "{Space}{Left 2}+{Right 3}"
+        Send "{Space}{Left 1}+{Right 2}"
         CoordMode "Pixel", "Screen"
         activatePalette := 0
         SearchCharacter:
@@ -691,6 +691,11 @@
         return
 
       #g::
+        Key "!frcf"
+        Say "Flat Gradient"
+        return
+
+      #^g::
         Key "!vww{Up}{Enter}" 
         Say "Gradient Annotator"
         return
