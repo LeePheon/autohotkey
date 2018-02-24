@@ -5,19 +5,6 @@ SetKeyDelay -1
 Say "AutoHotkey Loaded"
 ; #Include *i -\keypress-osd.ahk
 
-ClipChanged(Type) {
-;fn-delete - dropbox url patch
-  ; Break::
-    if SubStr(Clipboard, 1, 19) = "https://www.dropbox" {
-      Clipboard := RegexReplace(Clipboard, "^(.*?)www\.dropbox(.*?)(?:\?.*?)*$", "$1dl.dropboxusercontent$2")
-      Say "DropBox link converted"
-    } else {
-      Say "No DropBox link in clipboard"
-    }
-    ; return
-}
-OnClipboardChange("ClipChanged")
-
 ;restore keyboard layout
 cfg := "settings.ini"
 if FileExist(cfg) {
@@ -159,12 +146,37 @@ LWin & vk4C:: ;l
     Send "{Ctrl up}"
     return
 
+;win-f11 - toggle window click-through
+  #f11::
+    if WinGetExStyle("A") & 0x20 {
+        WinSetExStyle "-0x20", "A"
+        WinSetTransparent "OFF", "A"
+        WinSetAlwaysOnTop "OFF", "A"
+        Say "Fluid Off"
+    } else {
+        WinSetExStyle "+0x20", "A"
+        WinSetTransparent 128, "A"
+        WinSetAlwaysOnTop "ON", "A"
+        Say "Fluid On"
+    }
+    return
+
 ;win-f12 - toggle window transparency
   #f12::
     steps := 4
     trans := WinGetTransparent("A")
     trans := trans ? trans - 255/steps : 255 - 255/steps
     WinSetTransparent trans > 0 ? trans : "OFF", "A"
+    return
+
+;fn-delete - dropbox url patch
+  Break::
+    if SubStr(Clipboard, 1, 19) = "https://www.dropbox" {
+      Clipboard := RegexReplace(Clipboard, "^(.*?)www\.dropbox(.*?)(?:\?.*?)*$", "$1dl.dropboxusercontent$2")
+      Say "DropBox link converted"
+    } else {
+      Say "No DropBox link in clipboard"
+    }
     return
 
 ;----- Autohotkey
