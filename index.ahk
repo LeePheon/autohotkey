@@ -46,6 +46,11 @@ caretLang() {
 ; GLOBAL
 ;--------
 
+F10::
+  threadID := dllCall("GetWindowThreadProcessId", "uint", WinExist("A"), "uint", 0) 
+  say dllCall("GetKeyboardLayout", "uint", threadID, "uint") & 0xFFFF
+  return
+
 ;----- vim (win-hjkl, win-shift-hjkl)
 LWin & vk48:: ;h
   if GetKeyState("Shift")
@@ -107,19 +112,6 @@ LWin & vk4C:: ;l
   ;!Right::Send "^{Right}"
   ;+!Left::Send "+^{Left}"
   ;+!Right::Send "+^{Right}"
-
-;win-1..0 - disable taskbar application hotkeys
-  *#1::
-  *#2::
-  *#3::
-  *#4::
-  *#5::
-  *#6::
-  *#7::
-  *#8::
-  *#9::
-  *#0::
-  return
 
 ;win-` - toggle explorer window
   #`::
@@ -215,58 +207,87 @@ LWin & vk4C:: ;l
 ; APPLICATIONS
 ;--------------
   #if WinActive("ahk_exe chrome.exe")
-    f1::Key "^t"                  ;new tab
-    f2::Key "^{PgUp}"             ;prev tab
-    f3::Key "^{PgDn}"             ;next tab
-    f4::Key "+^t"                 ;undo close tab
+    f1::Key "^t" ;new tab
+    f2::Key "^{PgUp}" ;prev tab
+    f3::Key "^{PgDn}" ;next tab
+    f4::Key "+^t" ;undo close tab
+    f11:: ;toggle vpn
+      iconsNotFound := 0
+      vpn := ["vpn0", "vpn1"] 
+      MouseGetPos mouseX, mouseY
+      for k, v in vpn {
+        file := "chrome\" v ".png"
+        if !FileExist(file) {
+          Say "Error: file " file " is missing" 
+          return
+        } else {
+          CoordMode "Pixel", "Window"
+          WinGetPos winX, winY,,, "A"
+          ImageSearch iconX, iconY, 0, 0, A_ScreenWidth, A_ScreenHeight, file
+          if ErrorLevel = 0 {
+            Click iconX " " iconY 
+            Sleep 1000
+            CoordMode "Mouse", "Screen"
+            Click winX + iconX " " winY + iconY + 140
+            Send "{Escape}"
+            MouseMove mouseX, mouseY
+            return
+          } else {
+            iconsNotFound++ 
+          }
+        }
+      }
+      if iconsNotFound = vpn.Length() {
+        Say "Error(" ErrorLevel "): icon not found"
+      }
+      return
 
   #if WinActive("ahk_exe Code.exe") ;VSCode
-    #.::Send "^,"                 ;prefs
+    ^.::Send "^," ;prefs
 
   #if WinActive("ahk_class CabinetWClass") ;explorer.exe (QTTabBar)
-    #.::Key "!o"                  ;prefs
-    $f2::Key "+{f3}"              ;prev tab
-    $+f2::Key "{f2}"              ;shift-f2 - rename
-    ^+Del::                       ;shift-del - empty recycle bin
+    ; $f2::Key "+{f3}" ;prev tab
+    ; $+f2::Key "{f2}" ;shift-f2 - rename
+    ^+BS:: ;ctrl-shift-bs - empty recycle bin
       FileRecycleEmpty
       if !ErrorLevel {
         Say "Recycled"
       }
       return
-    ^i::Send "!{Enter}"           ;ctrl-i - show file info
+    ^i::Send "!{Enter}" ;ctrl-i - show file info
       return
-    !n::                          ;alt-n - move selected files to new folder
+    !n:: ;alt-n - move selected files to new folder
       Say "Move selected to new folder"
       ClipSaved := ClipboardAll()
-      Send "^{vk58}"  ;cut selection
+      Send "^{vk58}" ;cut selection
       Sleep 200
       Send "^+{vk4E}" ;new folder
       Sleep 200
       Send "{Enter}"
       Sleep 200
-      Send "{Enter}"  ;enter new folder
+      Send "{Enter}" ;enter new folder
       Sleep 800
-      Send "^{vk56}"  ;paste selection
+      Send "^{vk56}" ;paste selection
       Sleep 200
-      Send "{BS}"     ;go back
+      Send "{BS}" ;go back
       Sleep 200
-      Send "{f2}"     ;rename folder
+      Send "{f2}" ;rename folder
       Clipboard := ClipSaved
       ClipSaved := ""
       return
 
   #if WinActive("ahk_exe firefox.exe")
-    #.::                          ;prefs
+    ^.:: ;prefs
       Key "!t"
       Sleep 100
       Key "o"
       return
-    #!.::Key "^+a"                ;extensions
-    f1::Key "^{vk54}"             ;new tab
-    f2::Key "^{PgUp}"             ;prev tab
-    f3::Key "^{PgDn}"             ;next tab
-    f4::Key "+^t"                 ;undo close tab
-    f11::                         ;toggle vpn
+    ^!.::Key "^+a" ;extensions
+    f1::Key "^{vk54}" ;new tab
+    f2::Key "^{PgUp}" ;prev tab
+    f3::Key "^{PgDn}" ;next tab
+    f4::Key "+^t" ;undo close tab
+    f11:: ;toggle vpn
       iconsNotFound := 0
       vpn := ["vpn0", "vpn1"] 
       MouseGetPos mouseX, mouseY
@@ -295,54 +316,13 @@ LWin & vk4C:: ;l
       }
       return
 
-  #if WinActive("ahk_exe hh.exe")     ;windows help
+  #if WinActive("ahk_exe hh.exe") ;windows help
     Escape::WinClose "A"
-  #Include *i illustrator.ahk
 
 ;------ Graphics
-  #if WinActive("ANSYS SpaceClaim")
-    #.::Key "^+."                 ;prefs
-    f1::Click "100 40"            ;first tab
-    f2::Click "1100 40 WheelUp"   ;prev tab
-    f3::Click "1100 40 WheelDown" ;next tab
-    f4::Click "660 40"            ;middle tab
-    $!f1::Send "{f1}"             ;alt-f1 - help
-   ^+z::Key "^y"                  ;redo
-     `::Key "o"                   ;pie menu
-     y::Key "p"                   ;push
-     g::Key "m"                   ;move
-    $!1::                         ;alt-1 - toggle transparent/opaque
-      if scTransparent := !scTransparent {
-        Key "+!1"
-        Say "Transparent"
-      } else {
-        Key "!1"
-        Say "Opaque"
-      }
-      return
-    $!2::                         ;alt-2 - toggle perspective/ortho
-      if scPerspective := !scPerspective {
-        Key "+!2"
-        Say "Perspective"
-      } else {
-        Key "!2"
-        Say "Ortho"
-      }
-      return
-    !3::
-      Send "{RButton}{Down 6}{Right}{Enter}"
-      return
-    ^!3::
-      Send "{RButton}{Down 6}{Right}{Down}{Enter}"
-      return
-    ^+3::
-      Send "{RButton}{Down 6}{Right}{Down 2}"
-      Sleep 50
-      Send "{Enter}"
-      return
-     !4::
-       Send "{RButton}{Down 4}{Rigt}"
-       return
+  #Include *i illustrator.ahk
+  #Include *i figma.ahk
+  #Include *i spaceclaim.ahk
 
   #if WinActive("ahk_exe blender.exe")
     #.::Key "^!u"                 ;prefs
@@ -363,7 +343,6 @@ LWin & vk4C:: ;l
    *#v::KeyMod "{Numpad0}",   "#" ;view camera
    *#b::KeyMod "{NumpadDot}", "#" ;view selected
    *#Space::KeyMod "{NumpadEnter}", "#"
-    return
 
   #if WinActive("ahk_exe CINEMA 4D.exe")
     MButton::Mouse "M", "LAlt", "MButton"
@@ -389,9 +368,6 @@ LWin & vk4C:: ;l
     MButton::Mouse "M", "LAlt", "LShift", "LButton"
     RButton::Mouse "R", "LAlt", "LButton"
     $^w::Key "^w" ;close scene
-
-  #if WinActive("ahk_exe keyshot6.exe")
-    RButton::Mouse "R", "LButton"
 
   #if WinActive("ahk_exe Rocket3F.exe")
     MButton::Mouse "M", "LAlt"

@@ -1,6 +1,5 @@
 ﻿#hotstring EndChars `t
 #include *i ..\snippets_my.ahk 
-#include *i ..\snippets_work.ahk 
 
 ; *  - ending char is not required
 ; ?  - trigger inside word (?0 - turn it off)
@@ -22,8 +21,8 @@
 
 :o:dns1::208.67.222.222
 :o:dns2::208.67.220.220
-:o:rr::&raw=1
-:o:кк::&raw=1
+; :o:rr::&raw=1
+; :o:кк::&raw=1
 
 :o?:<--::{U+2190} ;left arrow
 :o?:Б--::{U+2190}
@@ -43,17 +42,6 @@
 :o?:--::{U+2013}  ;endash
 :o?:_::{U+2212}   ;minus
 
-:o?:+-::{U+00B1}  ;plus-minus
-:o?:/=::{U+2260}  ;not equal to
-:o?:.=::{U+2260}
-:o:x::{U+00D7}   ;multiplication
-:o:ч::{U+00D7}
-:o?:(/)::{U+2300} ;diameter
-:o?:)::{U+00B0}   ;degree
-:o?:...::{U+2026} ;ellipsis
-:o?:ююю::{U+2026}
-:o?:\::{U+0301}   ;combining acute accent
-
 :o?:(c)::{U+00A9} ;copyright
 :o?:(с)::{U+00A9}
 :o?:(r)::{U+00AE} ;registered
@@ -66,6 +54,19 @@
 :o?c:ae::{U+00E6} ;ae 
 :o?c:ае::{U+00E6}
 :o?c:фу::{U+00E6}
+:o?c:oo::{U+00F6} ;o:
+:o?c:оо::{U+00F6} ;o:
+
+:o?:+-::{U+00B1}  ;plus-minus
+:o?:/=::{U+2260}  ;not equal to
+:o?:.=::{U+2260}
+:o:x::{U+00D7}   ;multiplication
+:o:ч::{U+00D7}
+:o?:(/)::{U+2300} ;diameter
+:o?:)::{U+00B0}   ;degree
+:o?:...::{U+2026} ;ellipsis
+:o?:ююю::{U+2026}
+:o?:\::{U+0301}   ;combining acute accent
 
 :o?:=r::{U+20BD}  ;ruble
 :o?:=к::{U+20BD}
