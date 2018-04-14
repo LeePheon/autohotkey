@@ -8,10 +8,10 @@ Say(text, time := 1.5, x := 0, y := 0) {
   SetTimer "stop", time * 1000
   return
 
-  stop:
+  stop() {
     ToolTip
     SetTimer , "Off"
-    return
+  }
 }
 
 ;send with keyboard layout correction
