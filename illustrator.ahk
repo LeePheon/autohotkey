@@ -41,6 +41,21 @@
       Say "Clean Up..."
       return
 
+    !BS:: ;back one level isolation mode
+      MouseGetPos mouseX, mouseY
+      isolateBackButton := "ai\back-one-level.png"
+      if (!FileExist(isolateBackButton)) {
+        Say "Error: some sample file is missing"  
+      } else {
+        ImageSearch isolateBackButtonX, isolateBackButtonY, 0, 0, A_ScreenWidth, A_ScreenHeight, isolateBackButton
+        if ErrorLevel = 0 {
+          Click isolateBackButtonX " " isolateBackButtonY
+          MouseMove mouseX, mouseY
+          Say "Back One Level"
+        }
+      }
+      return
+
     +^BS:: ;delete unused items
       Key "!frmad{Enter}" 
       Say "Delete Unused Items"
@@ -224,8 +239,8 @@
     #f1::
       return
 
-    f2::
-      Key "!w{Down 16}{Enter}"
+    ~f2::
+      ; Key "!w{Down 16}{Enter}"
       Say "Color"
       return
 
