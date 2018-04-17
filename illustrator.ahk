@@ -1,4 +1,19 @@
-﻿;---------- illustrator
+﻿#if WinActive("ahk_class CabinetWClass") ;explorer.exe
+  #Enter:: ;win-enter - edit pdf by illustrator
+    hwnd := WinExist("A")
+    illPath := "C:\Program Files\Adobe\Adobe Illustrator CC 2018\Support Files\Contents\Windows\Illustrator.exe"
+    for window in ComObjCreate("Shell.Application").Windows {
+      if (window.hwnd == hwnd) {
+        for item in window.Document.SelectedItems {
+          if RegExMatch(item.path, "\.pdf$") {
+            run illPath " " item.path
+          }
+        }
+      }
+    }
+    return
+
+;---------- illustrator
 #if WinActive("ahk_exe Illustrator.exe")
 
   ;;mouse
