@@ -15,6 +15,11 @@
       say "Preview/Outline"
       return
 
+    !f1::
+      key "^+4"
+      say "Show/Hide Layout"
+      return
+
     f5::
       key "+h" 
       say "Flip Horizontal"
