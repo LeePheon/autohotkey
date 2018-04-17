@@ -122,7 +122,7 @@
     ;shift-alt     copy & x10 nudge. type: leading/tracking
 
     ;;align
-      ^#z:: ;toggle align to
+      ^#z:: ;toggle align to selection/key/artboard
         iconsNotFound := 0
         alignTo := ["selection", "keyobject", "artboard"] 
         MouseGetPos mouseX, mouseY
@@ -1193,7 +1193,7 @@
         Say "Edit/Undo"
         return
 
-      ^!z::
+      ^!z:: ;toggle hsb/rgb color model
         MouseGetPos mouseX, mouseY
         paletteTitle := "ai\color.png"
         paletteButton := "ai\menu.png"
@@ -1341,19 +1341,13 @@
       ;<blend mode - previous>
       ;<blend mode - normal>
 
+      ~^,::
+        Say "Other Misc/Switch Ruler Units"
+        return
+
       !,::
-        Key "!eng"
-        Say "Preferences/General..."
-        return
-
-      !#,::
-        Key "!ek"
-        Say "Keyboard Shortcuts..."
-        return
-
-      #,::
         Key "!frmss{Enter}"
-        Say "Set Unit Type to Pixel"
+        Say "Units: Pixels"
         return
       
       ~+^,::
@@ -1369,13 +1363,18 @@
       ;<blend mode - darken>
 
       ^.::
-        Key "!^." 
-        Say "Other Misc/Switch Ruler Units"
+        Key "!eng"
+        Say "Preferences/General..."
         return
 
-      #.::
+      !^.::
+        Key "!ek"
+        Say "Keyboard Shortcuts..."
+        return
+
+      !.::
         Key "!frms{Enter}" 
-        Say "Set Unit Type to Milimeters"
+        Say "Units: Milimeters"
         return
 
       ~+^.::
