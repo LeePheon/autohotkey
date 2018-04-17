@@ -245,7 +245,7 @@ LWin & vk4C:: ;l
   #if WinActive("ahk_exe Code.exe") ;VSCode
     ^.::Send "^," ;prefs
 
-  #if WinActive("ahk_class CabinetWClass") ;explorer.exe (QTTabBar)
+  #if WinActive("ahk_class CabinetWClass") ;explorer.exe
     ; $f2::Key "+{f3}" ;prev tab
     ; $+f2::Key "{f2}" ;shift-f2 - rename
     ^+BS:: ;ctrl-shift-bs - empty recycle bin
