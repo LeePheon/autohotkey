@@ -494,17 +494,47 @@
       ;<eraser>
       ;<path eraser>
 
+      ^6::
+        Key "!frtt{Enter}i{Enter}" 
+        Say "Transform/Isometric Left"
+        return
+
+      !6::
+         Key "!frtt{Enter}u{Enter}" 
+        Say "Transform/unIsometric Left"
+        return
+
     ;7
       ;<knife>
       ;<scissors>
+
+      ^7::
+        Key "!frtt{Enter}{i 3}{Enter}" 
+        Say "Transform/Isometric Top"
+        return
+
+      !7::
+        Key "!frtt{Enter}{Up}{Enter}"
+        Say "Transform/unIsometric Top"
+        return
 
     ;8
       ;
       ;
 
+      ^8::
+        Key "!frtt{Enter}{i 2}{Enter}" 
+        Say "Transform/Isometric Right"
+        return
+
+      !8::
+        Key "!frtt{Enter}{u 2}{Enter}" 
+        Say "Transform/unIsometric Right"
+        return
+
     ;9
-      ;
-      ;
+      ;<astute rotate at collision>
+      ;<astute rotate to collision>
 
     ;0
       ;<opacity 0%>
@@ -761,38 +791,8 @@
         return
 
     ;I
-      ;<line width>
-      ;<reshape>
-
-      ^i::
-        Key "!frtt{Enter}ii{Enter}" 
-        Say "Transform/Isometric Right"
-        return
-
-      +^i::
-        Key "!frtt{Enter}uu{Enter}" 
-        Say "Transform/unIsometric Right"
-        return
-
-      #i::
-        Key "!frtt{Enter}i{Enter}" 
-        Say "Transform/Isometric Left"
-        return
-
-      +#i::
-         Key "!frtt{Enter}u{Enter}" 
-        Say "Transform/unIsometric Left"
-        return
-
-      !i::
-        Key "!frtt{Enter}iii{Enter}" 
-        Say "Transform/Isometric Top"
-        return
-
-      +!i::
-        Key "!frtt{Enter}uuu{Enter}" 
-        Say "Transform/Isometric Top"
-        return
+      ;<isometric line tool>
+      ;<isometric move tool>
 
     ;J
       ;<join>
@@ -804,7 +804,7 @@
         return
 
      !^j::
-        Key "!frpcccc{Enter}" 
+        Key "!frp{c 4}{Enter}" 
         Say "Path/Close"
         return
 
@@ -848,8 +848,8 @@
         return
 
     ;L
-      ;<astute rotate at collision>
-      ;<astute rotate to collision>
+      ;<line segment tool>
+      ;
 
       ^l::
         Key "!ols" 
@@ -903,7 +903,7 @@
         Key "!fn" 
         Say "New"
         return
-        
+
       !n::
         Key "!ft" 
         Say "New From Template..."
@@ -1167,8 +1167,8 @@
         return
 
     ;Y
-      ;<line segment>
-      ;<axonometric line>
+      ;<width tool>
+      ;<reshape tool>
 
       ^y::
         Key "!oa{Enter}l" 
