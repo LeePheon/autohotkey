@@ -377,4 +377,12 @@ LWin & vk4C:: ;l
     MButton::Mouse "M", "LShift", "MButton"
     RButton::Mouse "R", "MButton"
 
+  #if WinActive("Adobe XD CC")
+    WheelUp::Send "!{WheelUp}" ;zoom-
+    WheelDown::Send "!{WheelDown}" ;zoom+
+    ^u::Send "^8" ;expand
+    !g::Send "^+g" ;ungroup
+    ![::Send "^+[" ;send to back
+    !]::Send "^+]" ;bring to front
+
  #if
