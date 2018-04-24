@@ -155,10 +155,11 @@ LWin & vk4C:: ;l
 
 ;win-f12 - toggle window transparency
   #f12::
-    steps := 4
     trans := WinGetTransparent("A")
-    trans := trans ? trans - 255/steps : 255 - 255/steps
-    WinSetTransparent trans > 0 ? trans : "OFF", "A"
+    trans := trans ? trans : 256
+    trans := trans - 256/4
+    WinSetTransparent trans ? trans : "OFF", "A"
+    Say trans ? "Transparency " Floor(trans*100 / 256) "%" : "Transparency 100%"
     return
 
 ;fn-delete - dropbox url patch
@@ -317,7 +318,7 @@ LWin & vk4C:: ;l
       return
 
   #if WinActive("ahk_exe hh.exe") ;windows help
-    Escape::WinClose "A"
+    ^Escape::WinClose "A"
 
 ;------ Graphics
   #Include *i illustrator.ahk
