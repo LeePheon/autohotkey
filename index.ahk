@@ -380,9 +380,21 @@ LWin & vk4C:: ;l
   #if WinActive("Adobe XD CC")
     WheelUp::Send "!{WheelUp}" ;zoom-
     WheelDown::Send "!{WheelDown}" ;zoom+
-    ^u::Send "^8" ;expand
-    !g::Send "^+g" ;ungroup
-    ![::Send "^+[" ;send to back
-    !]::Send "^+]" ;bring to front
+    !g::
+      Key "^+g" 
+      Say "Ungroup"
+      return
+    ^u::
+      Key "^8"
+      Say "Expand"
+      return
+    ![::
+      Send "^+["
+      Say "Send to Back"
+      return
+    !]::
+      Send "^+]"
+      Say "Bring to Front"
+      return
 
  #if
