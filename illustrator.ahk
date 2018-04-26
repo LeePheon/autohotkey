@@ -726,7 +726,7 @@
         Say "Live Paint/Gap Options..."
         return
 
-      +!f::
+      ^!f::
         Key "!one" 
         Say "Live Paint/Expand"
         return
