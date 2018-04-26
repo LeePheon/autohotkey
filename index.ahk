@@ -155,11 +155,13 @@ LWin & vk4C:: ;l
 
 ;win-f12 - toggle window transparency
   #f12::
+    steps := 4
+    alpha := 256
     trans := WinGetTransparent("A")
-    trans := trans ? trans : 256
-    trans := trans - 256/4
-    WinSetTransparent trans ? trans : "OFF", "A"
-    Say trans ? "Transparency " Floor(trans*100 / 256) "%" : "Transparency 100%"
+    trans := trans ? trans : alpha
+    trans := trans - alpha / steps
+    WinSetTransparent trans 0 ? trans : "OFF", "A"
+    Say trans ? "Transparency " Floor(trans * 100 / alpha) "%" : "Transparency 100%"
     return
 
 ;fn-delete - dropbox url patch
