@@ -363,6 +363,11 @@ LWin & vk4C:: ;l
     WheelDown::Send "^{WheelDown}"
     WheelUp::Send "^{WheelUp}"
 
+  #if WinActive("ahk_exe keyshot.exe") or WinActive("ahk_exe keyshot6.exe")
+    WheelDown::Send "{WheelUp}"
+    WheelUp::Send "{WheelDown}"
+    RButton::Mouse "R", "LButton"
+
   #if WinActive("ahk_exe LeoCAD.exe")
     MButton::Mouse "M", "LAlt", "MButton"
     RButton::Mouse "R", "LAlt", "LButton"
