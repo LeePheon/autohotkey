@@ -46,11 +46,6 @@ caretLang() {
 ; GLOBAL
 ;--------
 
-F10::
-  threadID := dllCall("GetWindowThreadProcessId", "uint", WinExist("A"), "uint", 0) 
-  say dllCall("GetKeyboardLayout", "uint", threadID, "uint") & 0xFFFF
-  return
-
 ;----- vim (win-hjkl, win-shift-hjkl)
 LWin & vk48:: ;h
   if GetKeyState("Shift")
@@ -351,6 +346,10 @@ LWin & vk4C:: ;l
     MButton::Mouse "M", "LAlt", "MButton"
     RButton::Mouse "R", "LAlt", "LButton"
 
+  #if WinActive("ahk_exe Dreamweaver.exe")
+    !Tab::Key "!vv" ;switch between code and design windows
+    !z::Key "!vww" ;toggle word wrap
+
   #if WinActive("ahk_exe FreeCAD.exe")
     RButton::Mouse "R", "MButton", "LButton"
 
@@ -376,6 +375,18 @@ LWin & vk4C:: ;l
     MButton::Mouse "M", "LAlt", "LShift", "LButton"
     RButton::Mouse "R", "LAlt", "LButton"
     $^w::Key "^w" ;close scene
+
+  #if WinActive("ahk_exe Rhino.exe")
+    f2:: ;prev tab
+      MouseGetPos mouseX, mouseY
+      Click "1800 40 WheelUp"
+      MouseMove mouseX, mouseY
+      return
+    f3:: ;next tab
+      MouseGetPos mouseX, mouseY
+      Click "1800 40 WheelDown"
+      MouseMove mouseX, mouseY
+      return
 
   #if WinActive("ahk_exe Rocket3F.exe")
     MButton::Mouse "M", "LAlt"
