@@ -5,7 +5,7 @@
     for window in ComObjCreate("Shell.Application").Windows {
       if (window.hwnd == hwnd) {
         for item in window.Document.SelectedItems {
-          if RegExMatch(item.path, "\.pdf$") {
+          if RegExMatch(item.path, "\.(pdf|svg)$") {
             run illPath " " item.path
           }
         }
@@ -652,12 +652,12 @@
         return
 
       +^c::
-        Key "!oaa{Enter}e" 
+        Key "!oaa{Right}e" 
         Say "Artboards/Rearrange"
         return
 
       !^c::
-        Key "!oaa{Enter}s" 
+        Key "!oaa{Right}s" 
         Say "Artboards/Fit to Selected Art"
         return
 
@@ -1320,7 +1320,7 @@
         return
 
       !'::
-        Key "!vp{Left}{Down 2}{Enter}" 
+        Key "!vss{Up}{Enter}" 
         Say "Snap to Grid"
         return
 
