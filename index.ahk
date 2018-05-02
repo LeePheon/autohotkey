@@ -320,11 +320,12 @@ LWin & vk4C:: ;l
 ;------ Graphics
   #Include *i illustrator.ahk
   #Include *i figma.ahk
+  #Include *i rhino.ahk
   #Include *i spaceclaim.ahk
 
   #if WinActive("ahk_exe blender.exe")
-    #.::Key "^!u"                 ;prefs
-    #`::Key "^!+c"                ;set origin
+    ^.::Key "^!u"                 ;prefs
+    !`::Key "^!+c"                ;set origin
    *#q::KeyMod "{Numpad7}",   "#" ;view ortho top
    *#w::KeyMod "{Numpad8}",   "#" ;view rotate up
    *#e::KeyMod "{Numpad9}",   "#" ;view ortho bottom
@@ -343,58 +344,47 @@ LWin & vk4C:: ;l
    *#Space::KeyMod "{NumpadEnter}", "#"
 
   #if WinActive("ahk_exe CINEMA 4D.exe")
-    MButton::Mouse "M", "LAlt", "MButton"
-    RButton::Mouse "R", "LAlt", "LButton"
+    MButton::Mouse "M", "LAlt", "MButton" ;pan
+    RButton::Mouse "R", "LAlt", "LButton" ;rotate
 
   #if WinActive("ahk_exe Dreamweaver.exe")
     !Tab::Key "!vv" ;switch between code and design windows
     !z::Key "!vww" ;toggle word wrap
 
   #if WinActive("ahk_exe FreeCAD.exe")
-    RButton::Mouse "R", "MButton", "LButton"
+    RButton::Mouse "R", "MButton", "LButton" ;rotate
 
   #if WinActive("ahk_exe Fusion360.exe")
-    MButton::Mouse "M", "LCtrl", "LShift", "MButton"
-    RButton::Mouse "R", "MButton"
+    MButton::Mouse "M", "LCtrl", "LShift", "MButton" ;pan
+    RButton::Mouse "R", "MButton" ;rotate
+    f1::Send "+1"
 
   #if WinActive("ahk_exe GravitDesigner.exe")
-    MButton::Mouse "M", "Space", "LButton"
-    WheelDown::Send "^{WheelDown}"
-    WheelUp::Send "^{WheelUp}"
+    MButton::Mouse "M", "Space", "LButton" ;pan
+    WheelUp::Send "^{WheelUp}" ;zoom-
+    WheelDown::Send "^{WheelDown}" ;zoom+
 
   #if WinActive("ahk_exe keyshot.exe") or WinActive("ahk_exe keyshot6.exe")
-    WheelDown::Send "{WheelUp}"
-    WheelUp::Send "{WheelDown}"
-    RButton::Mouse "R", "LButton"
+    WheelUp::Send "{WheelDown}" ;zoom-
+    WheelDown::Send "{WheelUp}" ;zoom+
+    RButton::Mouse "R", "LButton" ;rotate
 
   #if WinActive("ahk_exe LeoCAD.exe")
-    MButton::Mouse "M", "LAlt", "MButton"
-    RButton::Mouse "R", "LAlt", "LButton"
+    MButton::Mouse "M", "LAlt", "MButton" ;pan
+    RButton::Mouse "R", "LAlt", "LButton" ;rotate
 
   #if WinActive("ahk_exe modo.exe")
-    MButton::Mouse "M", "LAlt", "LShift", "LButton"
-    RButton::Mouse "R", "LAlt", "LButton"
+    MButton::Mouse "M", "LAlt", "LShift", "LButton" ;pan
+    RButton::Mouse "R", "LAlt", "LButton" ;rotate
     $^w::Key "^w" ;close scene
 
-  #if WinActive("ahk_exe Rhino.exe")
-    f2:: ;prev tab
-      MouseGetPos mouseX, mouseY
-      Click "1800 40 WheelUp"
-      MouseMove mouseX, mouseY
-      return
-    f3:: ;next tab
-      MouseGetPos mouseX, mouseY
-      Click "1800 40 WheelDown"
-      MouseMove mouseX, mouseY
-      return
-
   #if WinActive("ahk_exe Rocket3F.exe")
-    MButton::Mouse "M", "LAlt"
-    RButton::Mouse "R", "LAlt", "LButton"
+    MButton::Mouse "M", "LAlt" ;pan
+    RButton::Mouse "R", "LAlt", "LButton" ;rotate
 
   #if WinActive("ahk_exe SketchUp.exe")
-    MButton::Mouse "M", "LShift", "MButton"
-    RButton::Mouse "R", "MButton"
+    MButton::Mouse "M", "LShift", "MButton" ;pan
+    RButton::Mouse "R", "MButton" ;rotate
 
   #if WinActive("Adobe XD CC")
     WheelUp::Send "!{WheelUp}" ;zoom-
