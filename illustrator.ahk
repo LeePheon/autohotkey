@@ -228,7 +228,7 @@
         return
 
       ~^f2::
-        Say "Texture"
+        Say "Phantasm"
         return
 
     ~f1::
