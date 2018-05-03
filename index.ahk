@@ -243,9 +243,20 @@ LWin & vk4C:: ;l
   #if WinActive("ahk_exe Code.exe") ;VSCode
     ^.::Send "^," ;prefs
 
-  #if WinActive("ahk_class CabinetWClass") ;explorer.exe
-    ; $f2::Key "+{f3}" ;prev tab
-    ; $+f2::Key "{f2}" ;shift-f2 - rename
+  #if WinActive("ahk_class CabinetWClass") or WinActive("ahk_exe Clover.exe") ;explorer.exe (clover)
+    f1::Send "^n" ;new tab
+    f2:: ;pver tab
+      CoordMode "Mouse", "Window"
+      MouseGetPos mouseX, mouseY
+      Click "50 0 WheelUp"
+      MouseMove mouseX, mouseY
+      return
+    f3:: ;next tab
+      CoordMode "Mouse", "Window"
+      MouseGetPos mouseX, mouseY
+      Click "50 0 WheelDown"
+      MouseMove mouseX, mouseY
+      return
     ^+BS:: ;ctrl-shift-bs - empty recycle bin
       FileRecycleEmpty
       if !ErrorLevel {
@@ -253,6 +264,11 @@ LWin & vk4C:: ;l
       }
       return
     ^i::Send "!{Enter}" ;ctrl-i - show file info
+      return
+    ^\:: ;change active folder to current drive's root
+      Key "^l"
+      Sleep 200
+      Key "{Home}^{Right}^+{End}{BS}{Enter}" 
       return
     !n:: ;alt-n - move selected files to new folder
       Say "Move selected to new folder"
@@ -317,7 +333,10 @@ LWin & vk4C:: ;l
   #if WinActive("ahk_exe hh.exe") ;windows help
     ^Escape::WinClose "A"
 
-;------ Graphics
+  #if WinActive("ahk_exe TOTALCMD64.EXE")
+    $^w::Key "^w"
+
+;------ Graphic
   #Include *i illustrator.ahk
   #Include *i figma.ahk
   #Include *i rhino.ahk
