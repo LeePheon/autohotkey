@@ -339,6 +339,16 @@ LWin & vk4C:: ;l
     ^e::Key "!wq" ;quick view
     $^w::Key "^w"
 
+  #if WinActive("ahk_exe vlc.exe")
+    ^+Space::
+      Key "!leo" 
+      Say "Speed 100%"
+      return
+    ^+Left::Key "!le{Down 3}{Enter}" ;speed-
+    ^+Right::Key "!le{Down}{Enter}" ;speed+
+    ^+Down::Key "!lew" ;speed--
+    ^+Up::Key "!lef" ;speed++
+
 ;------ Graphic
   #Include *i illustrator.ahk
   #Include *i figma.ahk
