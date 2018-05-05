@@ -257,6 +257,8 @@ LWin & vk4C:: ;l
       Click "50 0 WheelDown"
       MouseMove mouseX, mouseY
       return
+    $+f2::f2 ;rename
+    $+f3::f3 ;search
     ^+BS:: ;ctrl-shift-bs - empty recycle bin
       FileRecycleEmpty
       if !ErrorLevel {
@@ -334,6 +336,7 @@ LWin & vk4C:: ;l
     ^Escape::WinClose "A"
 
   #if WinActive("ahk_exe TOTALCMD64.EXE")
+    ^e::Key "!wq" ;quick view
     $^w::Key "^w"
 
 ;------ Graphic
