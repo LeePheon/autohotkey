@@ -197,6 +197,9 @@ LWin & vk4C:: ;l
     DetectHiddenWindows "Off"
     return
 
+;------ Notes
+  ^!`::Run "C:\Users\user\Dropbox\Notes\notes.code-workspace"
+
 ;------ Spotlight alternatives
   !Escape::Send "+!^{Escape}" ;alt-escape - wox
   ^!Escape::Send "+{Escape}" ;ctrl-alt-escape - everything
@@ -356,7 +359,6 @@ LWin & vk4C:: ;l
   #Include *i spaceclaim.ahk
 
   #if WinActive("ahk_exe blender.exe")
-    ^.::Key "^!u"                 ;prefs
     !`::Key "^!+c"                ;set origin
    *#q::KeyMod "{Numpad7}",   "#" ;view ortho top
    *#w::KeyMod "{Numpad8}",   "#" ;view rotate up
