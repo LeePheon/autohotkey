@@ -108,6 +108,25 @@ LWin & vk4C:: ;l
   ;+!Left::Send "+^{Left}"
   ;+!Right::Send "+^{Right}"
 
+;ctrl-tab <-> alt-tab
+  $<^Tab::AltTab
+  $!Tab::
+    Send "{Ctrl down}{Tab down}"
+    KeyWait "LAlt"
+    Send "{Ctrl up}"
+    return
+
+;ctrl-alt-bs - lock workstation
+  ^!BS:: 
+    ;permission for key must be granded
+    Say "Locking"
+    Run "reg add HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System /v DisableLockWorkstation /t REG_DWORD /d 0 /f",, "Hide" 
+    Sleep 200
+    DllCall("user32\LockWorkStation")
+    Sleep 200
+    Run "reg add HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System /v DisableLockWorkstation /t REG_DWORD /d 1 /f",, "Hide" 
+    return 
+
 ;win-` - toggle explorer window
   #`::
     if WinExist("ahk_class CabinetWClass") {
@@ -124,15 +143,6 @@ LWin & vk4C:: ;l
       Say "Run Explorer"
     }
     return
-
-;ctrl-tab <-> alt-tab
-  $<^Tab::AltTab
-  $!Tab::
-    Send "{Ctrl down}{Tab down}"
-    KeyWait "LAlt"
-    Send "{Ctrl up}"
-    return
-
 ;win-f11 - toggle window click-through
   #f11::
     if WinGetExStyle("A") & 0x20 {
@@ -263,10 +273,9 @@ LWin & vk4C:: ;l
     $+f2::f2 ;rename
     $+f3::f3 ;search
     ^+BS:: ;ctrl-shift-bs - empty recycle bin
+      Say "Recycling..."
       FileRecycleEmpty
-      if !ErrorLevel {
-        Say "Recycled"
-      }
+      Say ErrorLevel ? "Not Recycled" : "Recycled"
       return
     ^i::Send "!{Enter}" ;ctrl-i - show file info
       return
