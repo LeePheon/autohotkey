@@ -47,30 +47,10 @@ caretLang() {
 ;--------
 
 ;----- vim (win-hjkl, win-shift-hjkl)
-LWin & vk48:: ;h
-  if GetKeyState("Shift")
-    Send "{Home}"
-  else
-    Send "{Left}"
-  return
-LWin & vk4A:: ;j
-  if GetKeyState("Shift")
-    Send "{PgDn}"
-  else
-    Send "{Down}"
-  return
-LWin & vk4B:: ;k
-  if GetKeyState("Shift")
-    Send "{PgUp}"
-  else
-    Send "{Up}"
-  return
-LWin & vk4C:: ;l
-  if GetKeyState("Shift")
-    Send "{End}"
-  else
-    Send "{Right}"
-  return
+  LWin & vk48::Send GetKeyState("Shift") ? "{Home}" : "{Left}"
+  LWin & vk4A::Send GetKeyState("Shift") ? "{PgDn}" : "{Down}"
+  LWin & vk4B::Send GetKeyState("Shift") ? "{PgUp}" : "{Up}"
+  LWin & vk4C::Send GetKeyState("Shift") ? "{End}"  : "{Right}"
 
 ;----- snippets
   #include *i snippets.ahk
