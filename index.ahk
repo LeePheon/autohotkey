@@ -83,10 +83,6 @@ caretLang() {
     }
     return
   ^#Space::Send "{U+00A0}" ;nbsp
-  ;!Left::Send "^{Left}"
-  ;!Right::Send "^{Right}"
-  ;+!Left::Send "+^{Left}"
-  ;+!Right::Send "+^{Right}"
 
 ;ctrl-tab <-> alt-tab
   $<^Tab::AltTab
