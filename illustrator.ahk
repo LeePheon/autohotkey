@@ -260,8 +260,13 @@
       return
 
     +f2::
-      Key "!wttt{Enter}"
+      Key "!w{t 3}{Enter}"
       Say "Transform"
+      return
+
+    !f2::
+      Key "!wk"
+      Say "Stroke"
       return
 
     #f2::
