@@ -30,19 +30,9 @@
       Say "Unlock Selected"
       return
 
-    MButton:: ;pan
-      Send "{Space down}{LButton down}"
-      KeyWait "MButton"
-      Send "{Space up}{LButton up}"
-      return
-
-    WheelUp:: ;zoom-
-      Send "!{WheelUp}"
-      return
-
-    WheelDown:: ;zoom+
-      Send "!{WheelDown}"
-      return
+    MButton::Mouse "M", "Space", "LButton" ;pan
+    WheelUp::Send "!{WheelUp}" ;zoom-
+    WheelDown::Send "!{WheelDown}" ;zoom+
 
   ;;other
     ~Alt Up:: Send "!" ;disable menu on single alt click
