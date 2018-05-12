@@ -410,6 +410,7 @@ caretLang() {
   #if WinActive("ahk_exe SketchUp.exe")
     MButton::Mouse "M", "LShift", "MButton" ;pan
     RButton::Mouse "R", "MButton" ;rotate
+    F1::Send "{PgUp}{PgDn}"
 
   #if WinActive("Adobe XD CC")
     WheelUp::Send "!{WheelUp}" ;zoom-
