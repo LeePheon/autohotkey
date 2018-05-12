@@ -253,12 +253,18 @@ caretLang() {
       FileRecycleEmpty
       Say ErrorLevel ? "Not Recycled" : "Recycled"
       return
-    ^i::Send "!{Enter}" ;ctrl-i - show file info
+    ^i::Send "!{Enter}"
+      Say "File Info"
       return
-    ^\:: ;change active folder to current drive's root
-      Key "^l"
+    ^\::
+      Send "^l"
       Sleep 200
       Key "{Home}^{Right}^+{End}{BS}{Enter}" 
+      Say "Go to \"
+      return
+    ^h::
+      Key "!vhh"
+      Say "Toggle Hidden Files"
       return
     !n:: ;alt-n - move selected files to new folder
       Say "Move selected to new folder"
