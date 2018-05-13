@@ -1,7 +1,18 @@
 ;---------- rhino
 #if WinActive("ahk_exe Rhino.exe")
+  ; send command to console
+  ; *todo add console activity check
+  Cmd(commands*) {
+    loop commands.Length() {
+      cmds .= commands[A_Index] . "{Enter}"
+    }
+    Key cmds
+  }
 
-  ^.::Key "!lo"
+  ^.::Cmd "Options" ;preferences
+
+  f1::Cmd "MaxViewport" ;toggle maximize active viewport
+  !f1::Cmd "'_Help"
 
   f2:: ;prev tab
     MouseGetPos mouseX, mouseY
@@ -15,6 +26,9 @@
     MouseMove mouseX, mouseY
     return
 
+  f4::Cmd "Gumball t" ;toggle manipulator
+
   ^+z::^y ;undo
+  !z::Key "'_Zoom a s"
 
 #if
