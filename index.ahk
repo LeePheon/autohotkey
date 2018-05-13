@@ -421,14 +421,10 @@ caretLang() {
     RButton::Mouse "R", "LAlt", "LButton" ;rotate
     $^w::Key "^w" ;close scene
 
-  #if WinActive("ahk_exe Rocket3F.exe")
-    MButton::Mouse "M", "LAlt" ;pan
-    RButton::Mouse "R", "LAlt", "LButton" ;rotate
-
   #if WinActive("ahk_exe SketchUp.exe")
     MButton::Mouse "M", "LShift", "MButton" ;pan
     RButton::Mouse "R", "MButton" ;rotate
-    F1::Send "{PgUp}{PgDn}"
+    f1::Send "{PgUp}{PgDn}"
 
   #if WinActive("Adobe XD CC")
     WheelUp::Send "!{WheelUp}" ;zoom-
