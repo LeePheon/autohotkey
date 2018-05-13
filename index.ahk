@@ -332,8 +332,26 @@ caretLang() {
   #if WinActive("ahk_exe TOTALCMD64.EXE")
     ^e::Key "!wq" ;quick view
     $^w::Key "^w"
+    f1:: ;shareware click
+      CoordMode "Pixel", "Window"
+      WinGetPos ,, windowWidth, windowHeight, "A"
+      MouseGetPos mouseX, mouseY
+      buttonShift := [-100, 0, 100]
+      loop 3 {
+        buttonNumber := "tc\nr" A_Index ".png"
+        if (FileExist(buttonNumber)) {
+          ImageSearch coordX, coordY, 0, 0, windowWidth, windowHeight, buttonNumber
+          if ErrorLevel = 0 {
+            Click coordX + buttonShift[A_Index], coordY
+            MouseMove mouseX, mouseY
+            Break
+          }
+        }
+      }
+      return
 
   #if WinActive("ahk_exe vlc.exe")
+    Enter::Key "!vf"
     ^+Space::
       Key "!leo" 
       Say "Speed 100%"
