@@ -29,6 +29,6 @@
   f4::Cmd "Gumball t" ;toggle manipulator
 
   ^+z::^y ;undo
-  !z::Key "'_Zoom a s"
+  !z::Cmd "'_Zoom a s"
 
 #if
